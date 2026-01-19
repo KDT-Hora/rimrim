@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{650abbbe-b7c7-4848-bede-27cb576f7a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Input">
+      <UniqueIdentifier>{6c99e22f-8924-4c56-8445-9e9f7f595073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{52dd8149-0d0c-40d4-a1cf-b48567b74691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\IMGUI">
+      <UniqueIdentifier>{2d1485d4-7c25-4c12-94c4-c2053e93d6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\IMGUI-SFML">
+      <UniqueIdentifier>{283a3b52-2f60-4a6f-9333-c6d82558eb48}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IMGUI\imgui_demo.cpp">
+      <Filter>External\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IMGUI\imgui_draw.cpp">
+      <Filter>External\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IMGUI\imgui_tables.cpp">
+      <Filter>External\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IMGUI\imgui_widgets.cpp">
+      <Filter>External\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IMGUI\imgui.cpp">
+      <Filter>External\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IMGUI-SFML\imgui-SFML.cpp">
+      <Filter>External\IMGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\ECSManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Input\Input.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Time\Time.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Map\MapManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Map\TerrainRenderSystem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameSession.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\ECSRegister.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Scene\SceneManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Scene\Title\TitleScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Scene\InGame\InGame.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Scene\IScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ECS\ECSManager.h" />
+    <ClInclude Include="ECS\ComponentManager.h" />
+    <ClInclude Include="ECS\DebugAPI.h" />
+    <ClInclude Include="ECS\ECSConfig.h" />
+    <ClInclude Include="ECS\EntityManager.h" />
+    <ClInclude Include="ECS\EventBus.h" />
+    <ClInclude Include="ECS\QueueManager.h" />
+    <ClInclude Include="ECS\SystemManager.h" />
+    <ClInclude Include="Context\SystemContext.h" />
+    <ClInclude Include="System\Input\Input.h" />
+    <ClInclude Include="ECS\Systems\RenderSystem.h" />
+    <ClInclude Include="ECS\Component\Components.h" />
+    <ClInclude Include="System\Time\Time.h" />
+    <ClInclude Include="ECS\Systems\PlayerMoveSystem.h" />
+    <ClInclude Include="Game\Map\MapManager.h" />
+    <ClInclude Include="Game\Map\Tile.h" />
+    <ClInclude Include="Context\GameContext.h" />
+    <ClInclude Include="Game\Constants.h" />
+    <ClInclude Include="Game\Map\TerrainRenderSystem.h" />
+    <ClInclude Include="Game\GameSession.h" />
+    <ClInclude Include="ECS\Systems\EntityRenderSystem.h" />
+    <ClInclude Include="ECS\ECSRegister.h" />
+    <ClInclude Include="System\Scene\SceneManager.h" />
+    <ClInclude Include="temp\Singleton.h" />
+    <ClInclude Include="System\Scene\IScene.h" />
+    <ClInclude Include="System\Scene\Title\TitleScene.h" />
+    <ClInclude Include="System\Scene\InGame\InGame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="タスク.md" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,52 @@
+Game				
+	Engine			
+		window		sf::RenderWindowのラップ
+		InputMG		"inputをゲームへのアクションへ変更
+                       GUI操作とゲーム操作の分離"
+		ResourceMG		読み込み
+		DefDataBase		データベース
+		DebugGUI		各デバッグウィンドウの管理
+        Config          設定各種
+        Time            DeltaTimeの管理
+        AudioMG        音声管理
+        Logger         ファイルログ
+				
+	UIManager			
+		TitleState		タイトル画面
+		PlayState		実際のゲーム画面　HUDの描画
+				
+	GameSession			
+		MapMG		マップの管理
+			TerrianGrid	Cell[][]の二次元配列でタイルや部屋の管理
+			Pathfinding	"移動するためのデータ
+                        NPCの移動アルゴリズムに使用"
+		TichMG		時間管理
+			IsPause	一時停止フラグlogic系を止める
+			TimeSpd	倍速の係数管理
+			CurrentTick	"開始からの経過をカウント
+                        ｎTick後に○○などの管理用"
+		ECSMG		ECS
+			EntityMG	IDの発行と回収
+			CompMG	Componentの管理
+			SystemMG	"LogicSystemとRenderSystemに分離
+                        ゲームの速度か毎フレームか"
+			EventBus		イベント　Systemの連携に使用
+			QueueMG		    イベントキューの管理
+		EventBus			ゲーム的なイベントの管理を行う
+        FactionManager      陣営管理
+        InventoryManager    アイテム管理
+        AlertSystem         警告システム管理
+
+
+エンティティ削除
+    Queueに積んでフレーム末で削除
+コンポーネント削除
+    Queueに積んでフレーム末で削除
+コンポーネント追加
+    即時生成ー＞Queueに積んで、フレーム末でシステムに登録
+エンティティ追加
+    即時生成ー＞Queueに積んで、フレーム末でシステムに登録
+
+    エンティティの生成
+        Factoryで生成する
+        生成時DataBaseからコンポーネントの情報を取得して追加

@@ -1,0 +1,131 @@
+
+
+
+
+タスク
+
+イベントシステムの実装
+デバッグAPI
+コンポーネントの操作を、ComponentInfoで触る形を追加する
+  コンポーネントの追加をするとき用がまだ
+
+デバッグ画面
+　完全なデバッグ画面と、GUIウィンドウを出すだけのモードと切り替える
+  F1とかであってる
+
+現在製作中
+リソースマネージャー書き替え
+　先に全てを読み込んで、使うときは持ってくるだけ
+イベントシステム
+
+システムの更新を一括で全てを行うのではなく、タイプ毎に分けて更新を回せる形にする
+タイプを設定して、それに応じて所属するシステムのコレクションを分ける必要アリ
+
+//  今現在はCoordinator.hppに全て書いてあるけど、分割する
+ECSManagerを作って、役割を分割する
+
+Systemの登録はあらかじめインスタンスを作って、それと登録する形にする
+
+メインのファイル構成
+Game
+ ├─ Window（SFML）
+ ├─ InputManager（入力）
+ ├─ SceneManager / StateManager（シーン切り替え）
+ ├─ ECS（Entity, Component, System）※使う場合
+ ├─ Renderer（描画）
+ └─ ResourceManager（テクスチャなど）
+
+ // イベントシステムの使い方　
+登録時
+RegisterEventsメソッドにEventBusの参照を渡して、Subscrive<イベント>([this](const イベント& e){
+this->メンバメソッド(e)})
+
+これで登録
+
+
+//  使い方こんな感じ
+
+#include "Coordinator.hpp"
+#include <iostream>
+
+struct Position { float x, y; };
+struct Velocity { float vx, vy; };
+
+class MovementSystem : public System
+{
+public:
+    void Update(Coordinator& coord)
+    {
+        for (auto e : entities)
+        {
+            auto& pos = coord.GetComponent<Position>(e);
+            auto& vel = coord.GetComponent<Velocity>(e);
+            pos.x += vel.vx;
+            pos.y += vel.vy;
+            std::cout << "Entity " << e << " moved to (" << pos.x << ", " << pos.y << ")\n";
+        }
+    }
+};
+
+int main()
+{
+    Coordinator coord;
+
+    // コンポーネント登録
+    coord.RegisterComponent<Position>();
+    coord.RegisterComponent<Velocity>();
+
+    // System登録
+    auto moveSystem = coord.RegisterSystem<MovementSystem>();
+
+    // 必要なシグネチャ設定
+    Signature moveSig;
+    moveSig.set(GetComponentTypeID<Position>());
+    moveSig.set(GetComponentTypeID<Velocity>());
+    coord.SetSystemSignature<MovementSystem>(moveSig);
+
+    // Entity作成
+    Entity e1 = coord.CreateEntity();
+    Entity e2 = coord.CreateEntity();
+
+    // コンポーネント追加（自動でSystemに登録）
+    coord.AddComponent<Position>(e1, {0, 0});
+    coord.AddComponent<Velocity>(e1, {1, 1});
+
+    coord.AddComponent<Position>(e2, {5, 5});
+
+    // 更新
+    moveSystem->Update(coord);
+}
+
+SQliteはSQLベースだから頑張てね
+データベース
+型情報とフォルダ名をどうバインドするか
+
+テンプレートを使用すると関数で毎回メモリ領域を取られる
+テンプレートはメモリは圧縮されない
+読み込みとインサートを入れたラムダ作れるよね
+
+ディレクトリ名と型情報が必要
+型情報が読み込みの都度必要
+型情報は保存し続ける必要はないよね
+型情報は読み込みのがテンプレートだから必要だよね
+ラムダ式のときに型情報が決まっていれば、決まったポインターが取れるよね
+
+
+//  ダンジョンのランダム生成のサンプルコード
+https://qiita.com/kyooooooooma/items/a8ee1157b89b7f744098
+
+//  バイオーム生成
+https://qiita.com/gis/items/e29f98a32ba9f920346d
+
+マイクラのマップ生成も見てみようね
+
+
+
+
+void GenerateSignature(Signature& sig) override {
+        // このシステムは Position と Velocity コンポーネントを必要とする
+        sig.set(typeid(Position).hash_code());
+        sig.set(typeid(Velocity).hash_code());
+    }
