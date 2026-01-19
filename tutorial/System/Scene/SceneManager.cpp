@@ -42,3 +42,9 @@ void SceneManager::Update()
 	}
 
 }
+
+void SceneManager::Render()
+{
+	//	レンダリングはシーン側で行う
+//	currentScene->Render();
+}

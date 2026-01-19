@@ -1,259 +1,117 @@
-//#include <iostream>
-//#include <SFML/Graphics.hpp>
-//#include <imgui.h>
-//#include <imgui-SFML.h>
-//
-//#include "Input.h"
-//
-//int main()
-//{
-//
-//	unsigned int width = 640 * 2;
-//	unsigned int height = 360 * 2;
-//
-//
-//	sf::RenderWindow* window = 
-//		new sf::RenderWindow(sf::VideoMode({ width,height }), "Tutorials");
-//	
-//	std::cout << "Window create" << std::endl;
-//
-//	window->setFramerateLimit(60);
-//	if (ImGui::SFML::Init(*window) == false)
-//	{
-//		std::cout << "ImGui Init error!" << std::endl;
-//	}
-//	
-//	//	Docking‚Ì—LŒø‰»
-//	ImGuiIO& io = ImGui::GetIO();
-//	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;		//	ƒhƒbƒLƒ“ƒO—LŒø‰»
-//
-//	// ƒXƒ^ƒCƒ‹’²®
-//	ImGui::StyleColorsDark();
-//	ImGuiStyle& style = ImGui::GetStyle();
-//	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-//		style.WindowRounding = 0.0f;
-//		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-//	}
-//
-//	sf::Clock deltaClock;
-//
-//	//	‚±‚±‚Ü‚Å‚ªSFML‚ÆGUI‚Ì‰Šúİ’è
-//
-//	sf::View view(sf::FloatRect({ 0.f, 0.f },{ 800.f, 600.f}));
-//
-//	sf::RectangleShape player(sf::Vector2f(50.f, 50.f));
-//	player.setFillColor(sf::Color::Green);
-//	player.setPosition({ 400.f, 300.f });
-//
-//
-//	while (window->isOpen())
-//	{
-//		while (const std::optional<sf::Event> eventOptional = window->pollEvent())
-//		{
-//			const sf::Event& event = *eventOptional;
-//
-//			ImGui::SFML::ProcessEvent(*window, event);
-//			InputManager::Instance().update(event);
-//
-//
-//
-//			if (event.is<sf::Event::Closed>())
-//			{
-//				std::cout << "Window close" << std::endl;
-//				window->close();
-//			}
-//		}
-//
-//		//	‚±‚±‚É’Êí‚Ìˆ—‚ğ‹LÚ
-//
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-//			view.move({ -5.f, 0.f });
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-//			view.move({ 5.f, 0.f });
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-//			view.move({0.f, -5.f});
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-//			view.move({ 0.f, 5.f });
-//
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
-//			view.zoom(0.98f);  // ƒY[ƒ€ƒCƒ“
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
-//			view.zoom(1.02f);  // ƒY[ƒ€ƒAƒEƒg
-//
-//
-//		if (InputManager::Instance().isKeyHeld(sf::Keyboard::Key::Right))
-//		{
-//			std::cout << "Press RIGHT" << std::endl;
-//		}
-//
-//		//	ImGui
-//		ImGui::SFML::Update(*window,deltaClock.restart());
-//
-//		//	ƒhƒbƒLƒ“ƒOƒŒƒCƒAƒEƒgw’è‚ğ‚±‚±‚Å‰Â”\
-//		ImGui::DockSpaceOverViewport(0,ImGui::GetMainViewport());
-//
-//		ImGui::Begin("Hello from ImGui");
-//		ImGui::Text("SFML 3.0.2 + ImGui");
-//		if (ImGui::Button("Exit")) {
-//			std::cout << "Window close for ImGui button" << std::endl;
-//			window->close();
-//		}
-//		ImGui::End();
-//
-//		//	ƒEƒBƒ“ƒhƒEˆê‚Â’PˆÊ
-//		// Begin‚ÆEnd‚Å‚­‚­‚Á‚Ä‚¢‚éŠÔ‚ª‚»‚Ì”ÍˆÍ‚Ì’†‚ªAˆê‚Â‚ÌƒEƒBƒ“ƒhƒE‚É‚È‚é
-//		ImGui::Begin("second window");
-//		ImGui::Text("test window");
-//		if (ImGui::Button("Test")) {
-//			std::cout << "Press Test button" << std::endl;
-//		}
-//
-//		//	ƒJƒ‰[ƒ{ƒbƒNƒX•\¦
-//		//	•ÏX‚à‰Â”\
-//		static ImVec4 color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // ‰ŠúFFÔ
-//		ImGui::ColorEdit4("Color", (float*)&color);
-//		//	F‚Ì•\¦ˆù‚İ
-//		ImGui::ColorButton("ColorBox", color);
-//
-//		ImGui::End();
-//
-//		//	ƒfƒ‚ƒEƒBƒ“ƒhƒE‚Ì•\¦ƒƒ\ƒbƒh
-//		//	Šî–{‚¢‚ç‚È‚¢
-//	//	ImGui::ShowDemoWindow();
-//
-//		//	------------------------------------
-//
-//		window->clear();
-//		ImGui::SFML::Render(*window);
-//
-//		window->setView(view);
-//		window->draw(player);
-//
-//		window->display();
-//
-//
-//		InputManager::Instance().reset();
-//	}
-//
-//	ImGui::SFML::Shutdown();
-//
-//	delete window;
-//
-//	return 0;
-//}
-//
-
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <imgui.h>
 #include <imgui-SFML.h>
+#include <iostream>
 
-#include "ECS/ECSManager.h"
-#include "ECS/ECSConfig.h"
 #include "Context/SystemContext.h"
-#include "ECS/DebugAPI.h"
-#include "ECS/Component/Components.h"
-
 #include "Game/GameSession.h"
 #include "System/Scene/SceneManager.h"
+#include "System/Scene/Title/TitleScene.h" //<- æœ€åˆã®ã‚·ãƒ¼ãƒ³ã¨ã—ã¦ä»®ã«æŒ‡å®š
 
-//	Å‰‚ÌƒV[ƒ“‚ÌŒÄ‚Ño‚µ
-#include "System/Scene/Title/TitleScene.h"
+/*
+ * ã€æ§‹é€ æ”¹é©æ¡ˆã€‘
+ *
+ * 1. mainé–¢æ•°ãŒå…¨ã¦ã®ä¸»è¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ‰€æœ‰ã™ã‚‹
+ *    - sf::RenderWindow, SystemContext, GameSession, SceneManager
+ *    - ã“ã‚Œã«ã‚ˆã‚Šã€æ‰€æœ‰æ¨©ãŒæ˜ç¢ºã«ãªã‚Šã€ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã¸ã®ä¾å­˜ãŒãªããªã‚Šã¾ã™ã€‚
+ *
+ * 2. ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’ã‚·ãƒ³ãƒ—ãƒ«ã«ã™ã‚‹
+ *    - ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç† -> æ›´æ–° -> æç”» ã®æ˜ç¢ºãªåˆ†é›¢ã€‚
+ *    - å…¨ã¦ã®æ›´æ–°ã¨æç”»ã¯SceneManagerã«å§”è­²ã—ã¾ã™ã€‚
+ *
+ * 3. ã‚°ãƒ­ãƒ¼ãƒãƒ«ãªã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å»ƒæ­¢
+ *    - SceneManager::Instance() ã‚’ä½¿ã‚ãšã€mainã§ç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¸¡ã—ã¦ã„ãã¾ã™ã€‚
+ */
 
 int main() {
+    // 1. ä¸»è¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
+    // SFML 3.xã§ã¯ãƒã‚¤ãƒ³ã‚¿ã§ç®¡ç†ã™ã‚‹å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“
+    unsigned int width = 1280;
+    unsigned int height = 720;
+    sf::RenderWindow window(sf::VideoMode({width, height}), "RimClone");
+    window.setFramerateLimit(60);
 
-	unsigned int width = 640 * 2;
-	unsigned int height = 360 * 2;
+    // ImGuiã®åˆæœŸåŒ–
+    ImGui::SFML::Init(window);
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-	sf::RenderWindow* window =
-		new sf::RenderWindow(sf::VideoMode({ width,height }), "Tutorials");
-	std::cout << "Window create" << std::endl;
+    // ã‚²ãƒ¼ãƒ ã®ã‚³ã‚¢ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’mainé–¢æ•°ã§æ‰€æœ‰
+    engine::SystemContext context(window);
+    game::GameSession gameSession;
+    SceneManager sceneManager; // <- ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã§ã¯ãªãã€é€šå¸¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ç”Ÿæˆ
 
-	engine::SystemContext context(*window);
-	game::GameSession gameSession;
-	gameSession.Init(context);
-	SceneManager::Instance().SetGameSession(&gameSession);
-	SceneManager::Instance().RequestChange<TitleScene>();
-	SceneManager::Instance().Init();
+    // 2. ä¾å­˜é–¢ä¿‚ã®æ³¨å…¥ï¼ˆDIï¼‰
+    // GameSessionã¨SceneManagerã«å¿…è¦ãªåˆæœŸè¨­å®šã‚’è¡Œã†
+    gameSession.Init(context);
+    sceneManager.SetGameSession(&gameSession); // SceneManagerã«GameSessionã‚’æ¸¡ã™
 
-
-	//	---------------------------
-	//	ECSİ’è
-
-
-	//	ƒGƒ“ƒeƒBƒeƒB‚Pì¬
-//	auto e1 = ecs.CreateEntity();
-//	//	ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á
-//	ecs.AddComponent<TransformComponent>(e1, TransformComponent{ {100.f,100.f}, 0.f, {1.f,1.f} });
-//	ecs.AddComponent<CircleShapeComponent>(e1, CircleShapeComponent(30.f, sf::Color::Red));
-//	ecs.AddComponent<MoveValueComponent>(e1, MoveValueComponent{});
-//
-//	//	ƒeƒXƒg—pƒGƒ“ƒeƒBƒeƒB
-//	auto e2 = ecs.CreateEntity();
-//	ecs.AddComponent<GridPositionComponent>(e2, GridPositionComponent{10,10});
-//	ecs.AddComponent<DebugRendererComponent>(e2, DebugRendererComponent{ sf::Color::Cyan });
-//
-//	//	ƒGƒ“ƒeƒBƒeƒB‚ğƒ}ƒbƒv‚É“o˜^
-//	gameSession.DebugAddEntityToMap(e2, 10, 10);
+    // æœ€åˆã®ã‚·ãƒ¼ãƒ³ã‚’ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
+    sceneManager.RequestChange<TitleScene>();
 
 
-	//	-----------------------------------------
-	
-	window->setFramerateLimit(60);
-	if (ImGui::SFML::Init(*window) == false)
-	{
-		std::cout << "ImGui Init error!" << std::endl;
-	}
-	//	Docking‚Ì—LŒø‰»
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;		//	ƒhƒbƒLƒ“ƒO—LŒø‰»
-	
+    sf::Clock clock;
+    while (window.isOpen()) {
+        // 3. ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
+        sf::Time dt = clock.restart();
 
+        // --- ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç† (SFML 3.x å½¢å¼) ---
+        while (const std::optional<sf::Event> eventOptional = window.pollEvent()) {
+            const sf::Event& event = *eventOptional;
+            ImGui::SFML::ProcessEvent(window, event);
+            if (event.is<sf::Event::Closed>())
+            {
+                std::cout << "Window close" << std::endl;
+                window.close();
+            }
+            // ã‚·ãƒ¼ãƒ³ã«ã‚¤ãƒ™ãƒ³ãƒˆã‚’æ¸¡ã™
+            sceneManager.HandleEvent(event);
+        }
 
-	sf::Clock clock;
-	while (window->isOpen()) {
-		sf::Time dt = clock.restart();
+        // --- æ›´æ–° ---
+        ImGui::SFML::Update(window, dt);
+        sceneManager.Update(dt); // SceneManagerçµŒç”±ã§ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’æ›´æ–°
 
-	
-		while (const std::optional<sf::Event> eventOptional = window->pollEvent()) {
-			const sf::Event& event = *eventOptional;
+        // --- æç”» ---
+        window.clear(sf::Color(30,30,30)); // èƒŒæ™¯è‰²
 
-			ImGui::SFML::ProcessEvent(*window, event);
+        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport()); // ImGui DockSpace
 
-			if (event.is<sf::Event::Closed>())
-			{
-				std::cout << "Window close" << std::endl;
-				window->close();
-			}
-		}
+        sceneManager.Render(window); // SceneManagerçµŒç”±ã§ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’æç”»
+        
+        ImGui::SFML::Render(window); // ImGuiã®UIã‚’æç”»
 
+        window.display();
+    }
+    //while (window->isOpen()) {
+    //    sf::Time dt = clock.restart();
+    //    while (const std::optional<sf::Event> eventOptional = window->pollEvent()) {
+    //        const sf::Event& event = *eventOptional;
+    //        ImGui::SFML::ProcessEvent(*window, event);
+    //        if (event.is<sf::Event::Closed>())
+    //        {
+    //            std::cout << "Window close" << std::endl;
+    //            window->close();
+    //        }
+    //    }
+    //    window->clear();
+    //    ImGui::SFML::Update(*window, clock.restart());
+    //    //	ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç«¯ã¨ã‹ã«ã¤ã‘ã‚‹ã‚„ã¤
+    //    //	ç”»é¢ãŒè¦‹ãŸã„æ™‚ã¯ã“ã‚Œã‚’ã‚ªãƒ•ã«ã™ã‚‹
+    //    //	åˆ‡ã‚Šæ›¿ãˆã§ç®¡ç†ã™ã‚‹
+    ////	ImGuiViewport* id = ImGui::GetMainViewport();
+    ////	ImGui::DockSpaceOverViewport(id->ID);
 
-		window->clear();
+    //    ImGui::Begin("ECS Inspector");
+    //    ImGui::End();
 
-		ImGui::SFML::Update(*window, clock.restart());
+    //    gameSession.Update();
+    //    ImGui::SFML::Render(*window);
+    //    window->display();
+    //}
 
-		//	ƒEƒBƒ“ƒhƒE‚Ì’[‚Æ‚©‚É‚Â‚¯‚é‚â‚Â
-		//	‰æ–Ê‚ªŒ©‚½‚¢‚Í‚±‚ê‚ğƒIƒt‚É‚·‚é
-		//	Ø‚è‘Ö‚¦‚ÅŠÇ—‚·‚é
-	//	ImGuiViewport* id = ImGui::GetMainViewport();
-	//	ImGui::DockSpaceOverViewport(id->ID);
+    // çµ‚äº†å‡¦ç†
+    ImGui::SFML::Shutdown();
 
-
-		// ƒfƒoƒbƒO•`‰æ (DebugAPI‚ğg—p)
-		ImGui::Begin("ECS Inspector");
-		// debug.GetAllEntities()... ‚È‚Ç‚ğŒÄ‚Ño‚µ‚Ä•\¦
-		// ’l‚Ì•ÏX‚Í debug.SetComponentValue(...) ‚ğŒÄ‚Ô
-		ImGui::End();
-
-		gameSession.Update();
-
-		ImGui::SFML::Render(*window);
-		window->display();
-
-	
-	}
-	ImGui::SFML::Shutdown();
-	delete window;
-
-	return 0;
+    return 0;
 }

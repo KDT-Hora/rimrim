@@ -1,5 +1,4 @@
 #pragma once
-#include "../../temp/Singleton.h"
 #include <memory>
 #include "IScene.h"
 #include <functional>
@@ -11,20 +10,18 @@ namespace game
 }
 
 //	シーン管理クラス
-class SceneManager :public Singleton<SceneManager>
+class SceneManager
 {
-    friend Singleton<SceneManager>;
-
 private:
 
     game::GameSession* gameSession = nullptr;
     std::unique_ptr<IScene> currentScene;
     std::function<std::unique_ptr<IScene>()> nextSceneFactory = nullptr;
 
+public:
+
     SceneManager();
     ~SceneManager();
-
-public:
 
     void SetGameSession(game::GameSession* session);
 
@@ -43,6 +40,7 @@ public:
 
     void Update();
 
+    void Render();
 
 };
 
